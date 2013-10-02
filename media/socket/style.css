@@ -1,0 +1,45 @@
+body{font-family:"Microsoft Yahei"}
+canvas{margin:0;padding:0}
+.pz{position:relative;z-index:0}
+.hide{display:none}
+.ov{overflow:hidden}
+/*信息展示*/
+.wrap{width:auto;min-height:930px;padding:0 10px;background:#fff;}
+.wrap .timeline{margin-left:-190px;}
+.wrap .span8{margin-left:0}
+#msgBx .media{padding:8px;border-bottom:1px solid #e4e4e4;transition:all 2s;}
+#msgBx .media *{transition:all 0.8s;}
+#msgBx .media p{color:#999;}
+#msgBx .media:hover{background:#E02222}
+#msgBx .media:hover *{color:#fff}
+#msgBx .media img{display:block;padding:1px;border:1px solid #e4e4e4;transition:all 1s;}
+#msgBx h4.media-heading{padding-bottom:4px;border-bottom:1px dotted #e4e4e4;font-size:14px;}
+
+/*#msgBx .media a:hover img{border-color:#fff;}*/
+/*信息发布*/
+.sendbox{position:absolute;right:1px;bottom:100%;left:1px;z-index:10;margin:0 0 2px;border:none !important;}
+.sendbox a,.sendbox button{transition:all 1s;}
+.messageEditer{width:60%;height:80px;resize:none}
+.sendbox .tabbable-custom{margin-bottom:0}
+.sendbox .nav-tabs{margin-right:28px;}
+.sendbox .portlet-tabs .nav-tabs > li > a{color:#fff}
+.sendbox .portlet-tabs .nav-tabs > li > a:hover,.sendbox .portlet-tabs .nav-tabs > .active > a{color:#E02222}
+.sendbox .bts{margin-left:10px;}
+.sendbox .bts button{font-weight:bold;font-family:"Microsoft Yahei"}
+
+/*登录弹窗*/
+.loginPopBox,.usrFaceBox{float:left;/*display:none;*/position:fixed;top:150px;left:50%;z-index:999;}
+.loginPopBox{width:420px;}
+.loginPopBox input{width:90%;height:auto !important;}
+/*头像设置*/
+/*.usrFaceBox{width:640px;}*/
+.usrFaceBox .portlet-tabs .tab-content{padding:10px 10px 0 !important;}
+.portlet.box.usrFaceBox .portlet-body{padding:0 0 10px}
+.usrFaceBox a{transition:all 1s;}
+.usrFaceBox .portlet-tabs .nav-tabs{margin-right:18px;}
+.usrFaceBox .portlet-tabs .nav-tabs > li > a{color:#fff}
+.usrFaceBox .portlet-tabs .nav-tabs > .active > a,.usrFaceBox .portlet-tabs .nav-tabs > li > a:hover{color:#4b8df8}
+.cameraBox_cv{/*border:1px dotted #ccc;*/margin:0;font-size:0;text-align:center;}
+.cameraBox_cv video,.cameraBox_cv canvas{display:inline;width:250px;height:186px;border:1px dotted #e4e4e4;}
+.cameraBox_cv video{margin-right:4px;}
+.cameraBox_cv canvas{}
