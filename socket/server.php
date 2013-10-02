@@ -11,28 +11,31 @@ $websocket->run();
 function WSevent($type,$event){
     global $websocket;
     $Mcache = $websocket->Mcache;
-    $signNum = preg_replace('/[^\d]+/','',(string)$event['sign']);
+
+    $usrs = $Mcache->get('usrs');
+    $usrid = $event['key'];
 
     $sendOneMsg = array(
         'flag'=> 'all',
         'sign'=>0
     );
     if ($type== 'in') {
-        $websocket->log( '客户进入id:' . $signNum);
+        $websocket->log( '客户进入id:' . $usrid);
         return;
     }
     if ($type=='out') {
-        $websocket->log('客户退出id:' .$signNum);
+        $websocket->log('客户退出id:' .$usrid);
         $msgs = array(
             'type'=>"usrout",
-            'id'=>$signNum,
-            'msg'=>$signNum.'已下线!'
+            'id'=>$usrid,
+            'msg'=>$usrs[$usrid]['name'].' [ID:'.$usrid.']: 已下线!'
         );
+        unset($usrs[$usrid]);
+        $Mcache->set('usrs',$usrs);
     } elseif ($type=='msg') {
         $recvMsg = json_decode($event['msg'],true);
-        $usrs = $Mcache->get('usrs');
-
-        $websocket->log($signNum.'消息:' . $event['msg']);
+        $logs = isset($usrs[$usrid]['name'])?$usrs[$usrid]['name'].' [ID:'.$usrid.'] ':$usrid;
+        $websocket->log($logs.'消息:' . $event['msg']);
 
         if($recvMsg['type']=='msg'){
             $usrid = $recvMsg['usrid'];
@@ -40,21 +43,21 @@ function WSevent($type,$event){
             $msgs = array(
                 'type'=>"msg",
                 'id'=>$usrid,
-                'usrnick'=>$usr['usrnick'],
+                'name'=>$usr['name'],
                 'pic'=>$usr['pic'],
                 'msg'=>$recvMsg['msg'],
+                'time'=>date("Y-m-d H:i:s"),
             );
         }else if($recvMsg['type']=='usrinfo'){
-            $usrid = $recvMsg['info']['usrid'];
-            $websocket->usr[$event['key']] = $usrid;
-            $usrInfo = array(
-                'usrid'=>$usrs[$usrid]['usrid'],
-                'usrnick'=>$usrs[$usrid]['usrnick'],
-                'pic'=>$usrs[$usrid]['pic']
-            );
+            $usrs[$usrid] = $recvMsg['info'];
+            unset($usrs[$usrid]['msg']);
+            $Mcache->set('usrs',$usrs);
+            $websocket->log(json_encode($Mcache->get('usrs')));
             $msgs = array(
                 "type"=>"usrin",
-                "info"=>$usrInfo,
+                "usrid"=>$event['key'],
+                "name"=>$recvMsg['info']['name'],
+                "pic"=>$recvMsg['info']['pic'],
                 "msg"=>"用户信息"
             );
         }else if($recvMsg['type']=='getallusrinfo'){

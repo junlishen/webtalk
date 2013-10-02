@@ -36,7 +36,8 @@ class websocket {
                 if ($sign == $this->master) {
                     $client = socket_accept($this->master);
                     $this->sockets[] = $client;
-                    $this->eventoutput('in', array( 'sign' => $sign));
+                    $k = array_search($sign, $this->sockets);
+                    $this->eventoutput('in', array( 'sign' => $sign,"key"=>$k));
                 } else {
                     $k = array_search($sign, $this->sockets);
                     $len = socket_recv($sign, $buffer, 2048, 0);
